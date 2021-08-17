@@ -3,6 +3,7 @@ Jordan Grose
 outline
 
 
+
 PAPER
 one page summarizing project
 libraries used
@@ -17,9 +18,9 @@ APP
 
 - ticker text input
 
-- company name
 - company description summary
 - company industry/sector
+- company founded
 - other company stats??
 - current stock price
 
@@ -30,33 +31,10 @@ APP
 
 - quick stock price facts
 	-- all time high/low
+	-- ...?
 
 - latest stock recomendation
 
-
-
-key .info vars:
-
-- shortName
-- city, state
-- sector
-- longBusinessSummary
-
-- currentPrice
-- earningsGrowth  (%)
-- returnOnEquity  (%)
-
-
-- currentRatio
-- returnOnAssets  (%)
-- revenueGrowth  (%)
-- profitMargins  (%)
-
-
-chart
-
-- all time high stock price
-- all time low stock price
 
 
 
