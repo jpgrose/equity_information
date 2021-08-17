@@ -18,7 +18,7 @@ Welcome to my first app using Streamlit.io! The purpose of this application is t
 
 
 # ticker input
-text = st.text_input(label='Enter a stock ticker here (use all caps!): ', value='MSFT')
+text = st.text_input(label='Enter a stock ticker here: ', value='MSFT')
 
 
 # data
