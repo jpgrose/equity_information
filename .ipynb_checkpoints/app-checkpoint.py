@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 import streamlit as st
+from sklearn.metrics import mean_squared_error
 
 
 # title and intro
@@ -52,7 +53,7 @@ else:
 if tic.info['currentRatio'] != None:
     currentRatio = str(tic.info['currentRatio'])
 else:
-    current_Ratio = 'Sorry, no data on this'
+    currentRatio = 'Sorry, no data on this'
 
     
 if tic.info['returnOnAssets'] != None:
@@ -98,6 +99,22 @@ at_low_d = at_low_d.strftime('%A %B %d, %Y')
 
 
 
+# moving average model
+hist_yr = tic.history(period='1y')
+hist_yr = hist_yr[['Close']]
+lookback = []
+error = []
+for index in range(2,30):
+    lookback.append(index)
+    error.append(mean_squared_error(hist_yr.Close[29:], 
+                                    hist_yr["Close"].rolling(index).mean()[28:251]))
+tab = np.array((lookback, error)).T
+df = pd.DataFrame(tab, columns = ['lookback', 'error'])
+lb = df.loc[df.error == df.error.min(), 'lookback'].values[0].astype('int')
+pred = hist_yr[-lb:]['Close'].values.mean().round(3)
+
+
+
 # body
 st.write('**Company name:   **', name)
 st.write('**Headquarters:   **', cityhq+','+' '+statehq)
@@ -133,9 +150,18 @@ st.text("")
 
 st.markdown('### **All-Time Stock Trade Volume**')
 st.write('This is an interactive graph showing the all-time trade volume for the chosen stock.')
-st.line_chart(data=volume)
+st.bar_chart(data=volume)
 st.text("")
 
 
 st.markdown('### **Latest Analyst Recommendations**')
 st.dataframe(recs)
+st.text("")
+
+st.markdown('### **Predicted Close Price**')
+st.write("Predicting stock prices is a very difficult task due to the many outside factors that can affect a company's performance and outlook. This prediction uses the prior year's closing prices to determine an optimal moving average lookback period that minimizes error (MSE). The optimal lookback period is then used to predict the stock's closing price for the next trading day, based on a moving average.")
+st.write('**Lookback period used for moving average prediction:   **')
+lb
+st.write('**Predicted closing price for next trading day:  **')
+pred
+st.text("")
