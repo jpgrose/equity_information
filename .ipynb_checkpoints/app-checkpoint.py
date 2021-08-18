@@ -106,7 +106,7 @@ lookback = []
 error = []
 for index in range(2,30):
     lookback.append(index)
-    error.append(mean_squared_error(hist_yr.Close[29:], 
+    error.append(mean_squared_error(hist_yr.Close[30:], 
                                     hist_yr["Close"].rolling(index).mean()[28:251]))
 tab = np.array((lookback, error)).T
 df = pd.DataFrame(tab, columns = ['lookback', 'error'])
