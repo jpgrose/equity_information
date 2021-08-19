@@ -18,7 +18,7 @@ Welcome to my first app using Streamlit.io! The purpose of this application is t
 
 
 # ticker input
-text = st.text_input(label='Enter a stock ticker here (use all caps!): ', value='MSFT')
+text = st.text_input(label='Enter a stock ticker here: ', value='MSFT')
 
 
 # data
@@ -99,18 +99,10 @@ at_low_d = at_low_d.strftime('%A %B %d, %Y')
 
 
 
-# moving average model
+# moving average model, lookback window == 2 (optimal, trained in IPYNB file)
 hist_yr = tic.history(period='1y')
 hist_yr = hist_yr[['Close']]
-lookback = []
-error = []
-for index in range(2,30):
-    lookback.append(index)
-    error.append(mean_squared_error(hist_yr.Close[30:], 
-                                    hist_yr["Close"].rolling(index).mean()[28:251]))
-tab = np.array((lookback, error)).T
-df = pd.DataFrame(tab, columns = ['lookback', 'error'])
-lb = df.loc[df.error == df.error.min(), 'lookback'].values[0].astype('int')
+lb = 2
 pred = hist_yr[-lb:]['Close'].values.mean().round(3)
 
 

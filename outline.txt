@@ -4,7 +4,7 @@ outline
 
 
 PAPER
-one page summarizing project
+Readme.md summarizing project
 libraries used
 importance
 learning
